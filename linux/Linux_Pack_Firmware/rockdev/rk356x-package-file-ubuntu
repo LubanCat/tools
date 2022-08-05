@@ -2,9 +2,5 @@ package-file	package-file
 bootloader	Image/MiniLoaderAll.bin
 parameter	Image/parameter.txt
 uboot		Image/uboot.img
-misc		Image/misc.img
 boot		Image/boot.img
-recovery	Image/recovery.img
 rootfs		Image/rootfs.img
-userdata	RESERVED
-backup		RESERVED
