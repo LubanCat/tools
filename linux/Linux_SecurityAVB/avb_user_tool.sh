@@ -16,8 +16,8 @@ usage()
 	echo "		Config efuse device"
 	echo "		Must generated keys [-n] firstly"
 	echo "	s	Sign file"
-	echo "		[ -b < /path/to/boot.img > ]: Sign boot.img"
-	echo "		[ -r < /path/to/recovery.img > ]: Sign recovery.img"
+	echo "		[ -b|-boot < /path/to/boot.img > ]: Sign boot.img"
+	echo "		[ -r|-recovery < /path/to/recovery.img > ]: Sign recovery.img"
 	echo "	d	Download permanent_attributes.bin to OTP or RPMB"
 	echo "	l	Lock device"
 	echo "	u	Unlock device"
@@ -51,16 +51,27 @@ signed_image()
 {
 	IMAGE=$1
 	echo "Sign ${IMAGE}"
-	SIZE=`ls $OUT/${IMAGE}.img -l | awk '{printf $5}'`
-	echo "image size is ${SIZE}"
-	# At least 68K greater than origin file
-	# Source code (scripts/avbtool)
-	# reserve some memory for (footer + vbmeta struct)
-	# - MAX_VBMETA_SIZE = 64 * 1024
-	# - MAX_FOOTER_SIZE = 4096
-	SIZE=$[(SIZE / 4096 + 18) * 4096]
-	echo "set size to ${SIZE}"
-	python $SCRIPTS/avbtool add_hash_footer --image $OUT/${IMAGE}.img --partition_size ${SIZE} --partition_name ${IMAGE} --key avb_keys/testkey_psk.pem --algorithm SHA512_RSA4096
+	if [ ! -z $2 ]; then
+		SIZE=$((${2} % 4096))
+		if [ $SIZE -ne 0 ]; then
+			rm $OUT/${IMAGE}.img
+			echo "[ERROR] size must be 4K aligned and 68K greater than file"
+			exit -1
+		fi
+		SIZE=$2
+		EXTRA_CMD="--public_key_metadata avb_keys/metadata.bin"
+	else
+		SIZE=`ls $OUT/${IMAGE}.img -l | awk '{printf $5}'`
+		echo "image size is ${SIZE}"
+		# At least 68K greater than origin file
+		# Source code (scripts/avbtool)
+		# reserve some memory for (footer + vbmeta struct)
+		# - MAX_VBMETA_SIZE = 64 * 1024
+		# - MAX_FOOTER_SIZE = 4096
+		SIZE=$[(SIZE / 4096 + 18) * 4096]
+		echo "set size to ${SIZE}"
+	fi
+	python $SCRIPTS/avbtool add_hash_footer --image $OUT/${IMAGE}.img --partition_size ${SIZE} --partition_name ${IMAGE} --key avb_keys/testkey_psk.pem --algorithm SHA512_RSA4096 ${EXTRA_CMD}
 	echo "Sign $IMAGE Done"
 }
 
@@ -70,14 +81,14 @@ Sign_file()
 	do
 		FILE=$2
 		case $1 in
-			-b)
+			-b|-boot)
 				cp $2 $OUT/boot.img
 				signed_image boot
 				VBMETA_CMD="${VBMETA_CMD} --include_descriptors_from_image $OUT/boot.img"
 				;;
-			-r)
+			-r|-recovery)
 				cp $2 $OUT/recovery.img
-				signed_image recovery
+				signed_image recovery $3
 				VBMETA_CMD="${VBMETA_CMD} --include_descriptors_from_image $OUT/recovery.img"
 				;;
 			*)
