@@ -1,3 +1,7 @@
+v3.32 revision(2024/06/19)
+1.add pid =0x0012 0x0017 0x0018 into adb scan
+2.add pid =0x0015 into uvc scan
+
 v3.31 revision(2024/06/14)
 1.add check partition for download gpt
 2.support dhara image
