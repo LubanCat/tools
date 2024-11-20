@@ -1,6 +1,7 @@
 
 工具名称                 | 工具用途
 ------------------------|-------------------------------------------
+BoardProofTool		 | 防抄板工具
 boot_merger		 | 打包或解包loader工具
 DDR_UserTool		 | DDR用户测试工具
 DriverAssitant          | 驱动安装工具

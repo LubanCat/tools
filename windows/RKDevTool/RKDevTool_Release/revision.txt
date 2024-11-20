@@ -1,3 +1,47 @@
+v3.31 revision(2024/06/14)
+1.add check partition for download gpt
+2.support dhara image
+
+v3.30 revision(2024/04/12)
+1.support to read and parse env partition
+2.support to switch storage in loader mode
+
+v3.29 revision(2024/03/15)
+1.fix erase gpt on download parameter
+2.increase sparse flag to support 64 partitions
+
+v3.28 revision(2024/03/13)
+1.fix create gpt for 1sector lba bug
+2.add spare idblock support to fill spare area
+
+v3.27 revision(2024/03/08)
+1.fix create gpt for 4k
+2.fix to read and parse gpt  for 4k
+3.fix to wait usbplug after download boot
+
+v3.26 revision(2024/02/25)
+1.support to download gpt info 4k ufs device
+2.set erase one size as 128k for nor flash
+3.support to set crc off for downloading 471 and 472
+
+v3.25 revision(2023/12/22)
+1.support to usb2 reconnection when failure of swiching usb3
+
+v3.24 revision(2023/12/12)
+1.add usb transfer 4m handshake with device
+
+v3.23 revision(2023/10/18)
+1.fix load config  bug in non-chinese-english os
+ 
+v3.22 revision(2023/10/08)
+1.fix env firmware check condition bug
+
+v3.21 revision(2023/09/22)
+1.support mousewheel to scroll download item
+
+v3.20 revision(2023/09/15)
+1.support usb3 download
+
 v3.19 revision(2023/09/11)
 1.get transfer max limit after switch storage
 
