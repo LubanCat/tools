@@ -1,3 +1,12 @@
+v2.29 revision(2024/12/24):
+1.change name from vdk into rvd
+
+v2.29 revision(2024/11/12):
+1.add ufs and vdk storage
+
+v2.28 revision(2024/07/18):
+1.create package-file when unpack image
+
 afptool: v2.27 revision(2023/10/25):
 1.fix check env condition bug
 

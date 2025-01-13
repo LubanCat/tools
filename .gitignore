@@ -25,7 +25,7 @@ windows/RKDevTool/RKDevTool_Release/Log
 
 #ignore large files:
 /windows/Rockchip_USB_SQ_Tool
-/windows/rk_ddrbin_tool*
+/windows/rk_ddrBin_tool*
 /windows/pin_debug_tool*
 /linux/PinDebug
 /linux/rk_ddrbin_tool*
